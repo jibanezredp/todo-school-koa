@@ -5,8 +5,6 @@ export const init = (router) => {
   router.get('/todo/lists', function* () {
     const lists = yield this.mongo.db.collection('lists').find().toArray();
     lists.forEach(list => list.id = list._id);
-    this.type = 'json';
-    this.status = 200;
     this.body = lists;
   });
 
@@ -16,16 +14,12 @@ export const init = (router) => {
     yield db.collection('lists').insertOne({ label });
     const lists = yield db.collection('lists').find({ label }).sort({ $natural: -1 }).toArray();
     lists[0].id = lists[0]._id;
-    this.type = 'json';
-    this.status = 200;
     this.body = lists[0];
   });
 
   router.delete('/todo/list/:id', function* () {
     const { id } = this.params;
     yield this.mongo.db.collection('lists').deleteOne({ _id: new ObjectID(id) });
-    this.type = 'json';
-    this.status = 200;
     this.body = { id, isDeleted: true };
   });
 };
