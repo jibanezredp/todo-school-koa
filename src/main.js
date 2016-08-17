@@ -13,6 +13,16 @@ app.use(bodyParser());
 app.use(cors());
 
 app.use(function* (next) {
+  try {
+    yield next;
+  } catch (err) {
+    this.status = err.status || 500;
+    this.body = err.message;
+    this.app.emit('error', err, this);
+  }
+});
+
+app.use(function* (next) {
   this.mongo = {
     db: yield mongo.connect('mongodb://localhost:27017/todo'),
   };
