@@ -2,6 +2,7 @@ import koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import koaRouter from 'koa-router';
 import cors from 'koa-cors';
+import mongo from 'mongodb';
 import { init as initLists } from './lists';
 import { init as initTasks } from './tasks';
 
@@ -10,6 +11,14 @@ const router = koaRouter();
 
 app.use(bodyParser());
 app.use(cors());
+
+app.use(function* (next) {
+  this.mongo = {
+    db: yield mongo.connect('mongodb://localhost:27017/todo'),
+  };
+  yield next;
+  this.mongo.db.close();
+});
 
 app.use(function* (next) {
   let start = new Date;
