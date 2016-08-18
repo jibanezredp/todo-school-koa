@@ -13,14 +13,14 @@
   "author": "jibanezredp",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.0.1",
     "http": "0.0.0",
     "koa": "^1.2.1",
     "koa-bodyparser": "^2.2.0",
     "koa-cors": "0.0.16",
     "koa-router": "^5.4.0",
     "mongodb": "^2.2.6",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "socket.io": "^1.4.8"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
